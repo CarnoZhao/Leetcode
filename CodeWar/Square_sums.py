@@ -34,26 +34,30 @@ def function(n):
     path = extend_path_full(dic, path, start)
     # path = extend_path_full(dic, path[::-1], path[-1])
     outs = [out for out in dic if out not in path]
-    print(outs)
+    # print(outs)
     positions = dict((node, i) for i, node in enumerate(path))
-    for out in outs:
-        for start in dic[out][:-1]:
-            starts = [[start]]
-            used = {start}
-            while all(x not in [x[-1] for x in starts] for x in dic[out] if x != start):
-                temp = []
-                for start in starts:
-                    right_one = path[(positions[start[-1]] + 1) % len(path)]
-                    right_two = [x for x in dic[right_one] if x in path and positions[x] not in [positions[right_one] + 1, positions[right_one], positions[right_one] - 1]]
-                    for new in right_two:
-                        new = path[positions[new] - 1]
-                        if new not in used:
-                            used.add(new)
-                            temp.append(start + [new])
-                starts = temp
-        rotate = [x for x in starts if x[-1] in dic[out]][0]
-        print(rotate)
-    # print(path)
+    # for out in outs:
+    #     for start in path:
+    #         if start not in dic[out]:
+    #             continue
+    #         starts = [[start]]
+    #         used = {start}
+    #         while all(x not in [x[-1] for x in starts] for x in dic[out] if x != start):
+    #             temp = []
+    #             for start in starts:
+    #                 right_one = path[(positions[start[-1]] + 1) % len(path)]
+    #                 right_two = [x for x in dic[right_one] if x in path and positions[x] not in [positions[right_one] + 1, positions[right_one], positions[right_one] - 1]]
+    #                 for new in right_two:
+    #                     new = path[positions[new] - 1]
+    #                     if new not in used:
+    #                         used.add(new)
+    #                         temp.append(start + [new])
+    #             starts = temp
+    #         if any(x in [x[-1] for x in starts] for x in dic[out] if x != start):
+    #             break
+    #     rotate = [x for x in starts if x[-1] in dic[out]][0]
+    #     print(rotate)
+    print(path)
     # print(len(path))
     return path
 
@@ -97,9 +101,10 @@ def dfs_extend(dic, path):
     return path if len(path) == n + 1 else None
 
 if __name__ == '__main__':
-    n = 180
-    # print(dfs(n))
+    n = 39
+    print(dfs(n))
     # paths = bfs(n)
+    # print(paths)
     path = function(n)
     # maxcor = 0
     # maxp = []
