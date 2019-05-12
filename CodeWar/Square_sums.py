@@ -27,16 +27,33 @@ def function(n):
     dic = {}
     for num in range(1, n + 1):
         dic[num] = [x - num for x in squares if 0 < x - num <= n and x != 2 * num]
-    #     dic[num].append(0)
-    # dic[0] = list(range(1, n + 1)
+        dic[num].append(0)
+    dic[0] = list(range(1, n + 1))
     start = 1
-    path = [start]
+    path = [0, 1]
     path = extend_path_full(dic, path, start)
-    path = extend_path_full(dic, path[::-1], path[-1])
-    for num in dic:
-        if num not in path:
-            print(num, [x for x in dic[num]])
-    # print(str(path)[1:-1])
+    # path = extend_path_full(dic, path[::-1], path[-1])
+    outs = [out for out in dic if out not in path]
+    print(outs)
+    positions = dict((node, i) for i, node in enumerate(path))
+    for out in outs:
+        for start in dic[out][:-1]:
+            starts = [[start]]
+            used = {start}
+            while all(x not in [x[-1] for x in starts] for x in dic[out] if x != start):
+                temp = []
+                for start in starts:
+                    right_one = path[(positions[start[-1]] + 1) % len(path)]
+                    right_two = [x for x in dic[right_one] if x in path and positions[x] not in [positions[right_one] + 1, positions[right_one], positions[right_one] - 1]]
+                    for new in right_two:
+                        new = path[positions[new] - 1]
+                        if new not in used:
+                            used.add(new)
+                            temp.append(start + [new])
+                starts = temp
+        rotate = [x for x in starts if x[-1] in dic[out]][0]
+        print(rotate)
+    # print(path)
     # print(len(path))
     return path
 
@@ -77,13 +94,13 @@ def dfs_extend(dic, path):
             ret = dfs_extend(dic, path + [nex])
             if ret and len(ret) == n + 1:
                 return ret
-    return path in len(path) == n + 1 else None
+    return path if len(path) == n + 1 else None
 
 if __name__ == '__main__':
-    n = 50
-    print(dfs(n))
+    n = 180
+    # print(dfs(n))
     # paths = bfs(n)
-    # path = function(n)
+    path = function(n)
     # maxcor = 0
     # maxp = []
     # for p in paths:
