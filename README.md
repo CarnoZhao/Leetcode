@@ -1,2 +1,2 @@
 # Leetcode
-Excersice of Leetcode and Codewar
+Excersice of LeetCode and CodeWar
