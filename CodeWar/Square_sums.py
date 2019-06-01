@@ -63,10 +63,8 @@ def function(n):
         if len(dic[num]) == mindgr:
             start = num
             break
-    print(num)
     path = [start]
     path = extend_path(dic, path, start)
-    print(path)
     return path if len(path) == n else False
 
 def square_sums(n):
@@ -94,8 +92,7 @@ def dfs_extend(dic, path, n):
                 return ret
 
 if __name__ == '__main__':
-    
+    n = 500
     # path = function(n)
-    for n in range(50, 1000):
-        path = square_sums(n)
-        print(n, len(path) == n)
+    path = square_sums(n)
+    print(n, len(path) == n)
