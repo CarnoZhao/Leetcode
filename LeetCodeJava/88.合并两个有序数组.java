@@ -1,8 +1,10 @@
+import java.util.Arrays;
+
 /*
  * @Author: Xun Zhao
  * @Date: 2019-09-21 17:03:28
  * @LastEditors: Xun Zhao
- * @LastEditTime: 2019-09-21 20:27:06
+ * @LastEditTime: 2019-09-22 14:47:12
  * @Description: 
  */
 /*
@@ -12,26 +14,27 @@
  */
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        if (m == 0) {
-            for (int i = 0; i < n; i ++) {
-                nums1[i + m] = nums2[i];
-            }
-        } else if (n != 0) {
-            int j = 0;
-            int tmp;
-            for (int i = 0; i < m; i ++) {
-                if (nums1[i] > nums2[j]) {
-                    tmp = nums1[i];
-                    nums1[i] = nums2[j];
-                    nums2[j] = tmp;
-                    j ++;
-                }
-            }
-            for (int i = 0; i < n; i ++) {
-                nums1[i + m] = nums2[i];
+        int[] tmp = new int[m + n];
+        int i = 0;
+        int j = 0;
+        for (int k = 0; k < m + n; k ++) {
+            if (i >= m && j < n) {
+                tmp[k] = nums2[j];
+                j ++;
+            } else if (i < m && j >= n) {
+                tmp[k] = nums1[i];
+                i ++;
+            } else if (nums1[i] <= nums2[j]) {
+                tmp[k] = nums1[i];
+                i ++;
+            } else {
+                tmp[k] = nums2[j];
+                j ++;
             }
         }
-        
+        for (int k = 0; k < m + n; k ++) {
+            nums1[k] = tmp[k];
+        }
     }
 }
 
