@@ -14,18 +14,28 @@
 
 class Solution:
     def findMode(self, root: TreeNode) -> List[int]:
+        _, _, ret, _ = self.f(root, None, 0, [], 0)
+        return ret
 
-    def f(self, root, preval, precnt, premaxcnt):
-        val = root.val
-        cnt = 1 if val != preval else preval + 1
-        maxcnt = max(premaxcnt)
+    def f(self, root, preval, precnt, maxvals, maxcnt):
+        if not root:
+            return None, 0, [], 0
         if root.left:
-            lval, lcnt, lmaxcnt = self.f(root.left)
-            if lval == val:
-                cnt += lcnt
-                maxcnt = max(lmaxcnt, cnt)
+            preval, precnt, maxvals, maxcnt = self.f(root.left, preval, precnt, maxvals, maxcnt)
+        val = root.val
+        if val == preval:
+            cnt = precnt + 1
+        else:
+            cnt = 1
+        if maxcnt < cnt:
+            maxvals = [root.val]
+            maxcnt = cnt
+        elif maxcnt == cnt:
+            maxvals.append(root.val)
         if root.right:
-            rval, rcnt, rmaxcnt = self.f(root.right)
+            val, cnt, maxvals, maxcnt = self.f(root.right, val, cnt, maxvals, maxcnt)
+        return val, cnt, maxvals, maxcnt
+                
             
         
 
