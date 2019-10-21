@@ -16,12 +16,15 @@ class Solution:
     def postorder(self, root: 'Node') -> List[int]:
         if not root:
             return []
-        ret = [root.val]
         st = [root]
+        ret = []
         while st:
-            root = st.pop()
-            cs = root.children
-            ret
+            if st[-1].children and (not ret or (ret and ret[-1] != st[-1].children[-1])):
+                st.extend(st[-1].children[::-1])
+            else:
+                p = st.pop()
+                ret.append(p)
+        return [i.val for i in ret]
 
 # @lc code=end
 
