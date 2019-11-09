@@ -8,20 +8,11 @@
 class Solution:
     def judgeSquareSum(self, c: int) -> bool:
         ret = False
-        for i in range(c):
-            target = c - i * i
-            if target < 0:
+        for i in range(c + 1):
+            if i ** 2 > c:
                 break
-            l = 0
-            r = target
-            while l < r:
-                m = (l + r) // 2
-                diff = m * m - target
-                if diff > 0:
-                    r = m
-                else:
-                    l = m + 1
-            ret = l * l == target
+            diff = (c - i ** 2) ** 0.5
+            ret = diff == int(diff)
             if ret:
                 break
         return ret
